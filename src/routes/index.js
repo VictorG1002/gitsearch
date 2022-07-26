@@ -1,9 +1,15 @@
 import React from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Home from '../pages/Home'
 
-// import { Container } from './styles';
-
-function Routes() {
-  return <div />
+function MyRoutes() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default Routes
+export default MyRoutes
