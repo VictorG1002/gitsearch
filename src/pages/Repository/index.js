@@ -1,9 +1,12 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 
 // import { Container } from './styles';
 
 function Repository() {
-  return <h1>Repository</h1>
+  let { repository } = useParams()
+
+  return <h1>Repository: {repository}</h1>
 }
 
 export default Repository
