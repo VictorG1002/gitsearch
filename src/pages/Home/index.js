@@ -69,7 +69,7 @@ function Home() {
         {repositories.map(repository => (
           <li key={repository}>
             <span>{repository}</span>
-            <Link to={`/repository/${repository}`}>Detalhes</Link>
+            <Link to={`${encodeURIComponent(repository)}`}>Detalhes</Link>
           </li>
         ))}
       </List>
