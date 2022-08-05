@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import api from '../../services/api'
+import Loading from './Loading'
 
 // import { Container } from './styles';
 
@@ -8,6 +9,7 @@ function Repository() {
   let { repository } = useParams()
   const [repo, setRepo] = useState({})
   const [issues, setIssues] = useState([])
+  const [loading, setLoading] = useState(true)
 
   const getResponse = async () => {
     const [repositorie, issues] = await Promise.all([
@@ -20,6 +22,10 @@ function Repository() {
         }
       }
     ])
+    setRepo(repositorie.data)
+    setIssues(issues.data)
+    setLoading(false)
+
     console.log(repositorie)
     console.log(issues)
   }
@@ -27,7 +33,7 @@ function Repository() {
     getResponse()
   }, [])
 
-  return <h1>Repository: {repository}</h1>
+  return <>{loading ? <Loading /> : <h1>Repository: {repository}</h1>}</>
 }
 
 export default Repository
