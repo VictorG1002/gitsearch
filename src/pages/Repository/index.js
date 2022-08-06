@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import api from '../../services/api'
-import Loading from './Loading'
+import { IssuesList, Loading, Owner } from './styles'
+import { FaSpinner } from 'react-icons/fa'
+import Container from '../../components/Container'
 
 // import { Container } from './styles';
 
@@ -22,8 +24,8 @@ function Repository() {
         }
       }
     ])
-    setRepo(repositorie.data)
-    setIssues(issues.data)
+    setRepo(repositorie)
+    setIssues(issues)
     setLoading(false)
 
     console.log(repositorie)
@@ -33,7 +35,41 @@ function Repository() {
     getResponse()
   }, [])
 
-  return <>{loading ? <Loading /> : <h1>Repository: {repository}</h1>}</>
+  return (
+    <>
+      {loading ? (
+        <Loading>
+          <FaSpinner color="#FFF" size={40} />
+        </Loading>
+      ) : (
+        <Container>
+          <Owner>
+            <Link to={'/'}>Voltar para home</Link>
+            <img src={repo.data.owner.avatar_url} />
+            <h1>{repo.data.full_name}</h1>
+            <p>{repo.data.description}</p>
+          </Owner>
+
+          <IssuesList>
+            {issues.data.map(issue => (
+              <li key={issue.id}>
+                <img src={issue.user.avatar_url} />
+                <div>
+                  <strong>
+                    <a href={issue.html_url}>{issue.title}</a>
+                    {issue.labels.map(label => (
+                      <span key={label.id}>{label.name}</span>
+                    ))}
+                  </strong>
+                  <p>{issue.user.login}</p>
+                </div>
+              </li>
+            ))}
+          </IssuesList>
+        </Container>
+      )}
+    </>
+  )
 }
 
 export default Repository
