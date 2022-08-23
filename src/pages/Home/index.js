@@ -28,7 +28,6 @@ function Home() {
     e.preventDefault()
     setLoading(true)
     const response = await api.get(`/repos/${newRepo}`)
-    console.log(response.data)
 
     const name = response.data.full_name
 
